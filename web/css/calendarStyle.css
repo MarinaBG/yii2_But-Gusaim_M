@@ -1,0 +1,367 @@
+h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+.calendarWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+}
+.calendarWrapper .monthWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.calendarWrapper .monthWrapper .monthTable {
+  width: 100%;
+}
+.calendarWrapper .monthWrapper .calendarHeader {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.calendarWrapper .monthWrapper .calendarHeader h3 {
+  margin: 0px 20px 0px 20px;
+}
+.calendarWrapper .monthWrapper .arrow {
+  width: 20px;
+  height: auto;
+}
+.calendarWrapper .monthWrapper .arrow:hover {
+  fill: #9d9d9d;
+  cursor: pointer;
+}
+.calendarWrapper .monthWrapper .thead-dark {
+  color: #fafafa;
+  background-color: #1a1a1a;
+}
+.calendarWrapper .monthWrapper .workingDay {
+  color: #fafafa;
+  background-color: #9ac48d;
+}
+.calendarWrapper .monthWrapper .holiday {
+  color: #fafafa;
+  background-color: #fc7a7a;
+}
+.calendarWrapper .monthWrapper th,
+.calendarWrapper .monthWrapper td {
+  width: 14.2%;
+}
+.calendarWrapper .monthWrapper td {
+  height: 80px;
+  cursor: pointer;
+}
+.calendarWrapper .monthWrapper .table tbody tr td {
+  padding: 0px;
+}
+.calendarWrapper .monthWrapper .day {
+  width: 100%;
+  height: 80px;
+  box-sizing: border-box;
+  padding: 8px;
+  border: 1px solid transparent;
+}
+.calendarWrapper .monthWrapper .day:hover {
+  border: 1px solid #9d9d9d;
+}
+.calendarWrapper .monthWrapper .day.active {
+  background-color: #f5f5f5;
+}
+.calendarWrapper .dayEventsWrapper {
+  width: 30%;
+  margin-left: 20px;
+}
+.calendarWrapper .dayEventsWrapper .btn {
+  background-color: #7aa86c;
+  border-color: #7aa86c;
+  margin-top: 20px;
+}
+.calendarWrapper .dayEventsWrapper .btn:hover,
+.calendarWrapper .dayEventsWrapper .btn:active {
+  border-color: #9ac48d;
+  background-color: #9ac48d;
+  outline: none;
+}
+.calendarWrapper .dayEventsWrapper h3 {
+  padding: 0px 0px 15px 0px;
+  margin: 0;
+  border-bottom: 2px solid #f5f5f5;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin-top: 9px;
+  margin-bottom: 9px;
+  font-size: 14px;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventLine {
+  margin-right: 10px;
+  width: 5px;
+  background-color: #9ac48d;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventTime {
+  width: 70px;
+  font-weight: bold;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventTitle {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventAuthor {
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper:hover {
+  cursor: pointer;
+  background-color: #f5f5f5;
+}
+.popup,
+.addEventFormWrapper {
+  position: fixed;
+  min-height: 100%;
+  min-width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}
+.popup_wrapper,
+.addEventFormWrapper_wrapper {
+  min-height: auto;
+  min-width: auto;
+  display: flex;
+}
+.popup_bg,
+.addEventFormWrapper_bg {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  min-height: 100%;
+  min-width: 100%;
+  background: rgba(51, 51, 51, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.popup_img,
+.addEventFormWrapper_img {
+  max-width: 1100px;
+  min-height: 670px;
+  max-height: 720px;
+  border: 11px solid  #fefefe;
+  border-radius: 7px;
+  background-color: white;
+}
+.popup_cancel,
+.addEventFormWrapper_cancel {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  border: 2px solid #fefefe;
+  border-radius: 50%;
+  background-color: #69885f;
+  z-index: 1008;
+  margin-left: -20px;
+  margin-top: -15px;
+  cursor: pointer;
+}
+.popup_cancel:hover,
+.addEventFormWrapper_cancel:hover {
+  background-color: #9ac48d;
+}
+.popup_text,
+.addEventFormWrapper_text {
+  width: 900px;
+  height: 600px;
+  border: 0px solid  #fefefe;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+}
+.popup_text .eventTitle,
+.addEventFormWrapper_text .eventTitle {
+  width: 900px;
+  height: 100px;
+  display: flex;
+  justify-content: flex-start;
+  background-color: #9ac48d;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+.popup_text .eventTitle h3,
+.addEventFormWrapper_text .eventTitle h3 {
+  margin: 0px 20px 0px 20px;
+  color: #fefefe;
+  font-weight: bold;
+}
+.popup_text .eventTime,
+.addEventFormWrapper_text .eventTime {
+  width: 900px;
+  height: 40px;
+  padding: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+.popup_text .eventAuthor,
+.addEventFormWrapper_text .eventAuthor {
+  width: 900px;
+  padding: 5px 20px 5px 20px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 16px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.popup_text .eventAuthor p,
+.addEventFormWrapper_text .eventAuthor p {
+  margin: 0px;
+}
+.popup_text .eventAuthor .authorTitle,
+.addEventFormWrapper_text .eventAuthor .authorTitle {
+  margin-right: 15px;
+}
+.popup_text .eventDescription,
+.addEventFormWrapper_text .eventDescription {
+  margin-top: 40px;
+  width: 900px;
+  padding: 5px 20px 5px 20px;
+}
+.popup_text .eventDescription .descriptionText,
+.addEventFormWrapper_text .eventDescription .descriptionText {
+  height: 230px;
+  margin-top: 20px;
+}
+.popup_text .btn,
+.addEventFormWrapper_text .btn {
+  border-color: #fa5d5d;
+  background-color: #fa5d5d;
+}
+.popup_text .btn:hover,
+.addEventFormWrapper_text .btn:hover,
+.popup_text .btn:active,
+.addEventFormWrapper_text .btn:active {
+  background-color: #fc7a7a;
+  border-color: #fc7a7a;
+  outline: none;
+}
+.addEventFormWrapper_text {
+  width: 900px;
+  height: 600px;
+  border: 0px solid  #fefefe;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.newEventForm {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+.form-group {
+  width: 860px;
+  height: auto;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-bottom: 0px;
+  margin-left: 20px;
+}
+.form-group .control-label {
+  width: 150px;
+}
+.form-group .control-label {
+  margin: 0px;
+}
+.form-group .help-block {
+  margin: 0px;
+  width: 870px;
+}
+.form-group .label {
+  color: #f5f5f5;
+}
+.field-neweventform-title {
+  width: 870px;
+}
+.field-neweventform-title .form-control {
+  width: 710px;
+}
+.field-neweventform-title label {
+  color: #f5f5f5!important;
+}
+.field-neweventform-start_time,
+.field-neweventform-end_time {
+  width: 390px;
+  margin-left: 0px;
+}
+.field-neweventform-start_time .input-group,
+.field-neweventform-end_time .input-group {
+  width: 200px;
+}
+.field-neweventform-start_time .form-control,
+.field-neweventform-end_time .form-control {
+  width: 200px;
+}
+.field-neweventform-author {
+  width: 870px;
+  margin-left: 0px;
+}
+.field-neweventform-author .form-control {
+  width: 710px;
+}
+.field-neweventform-description {
+  width: 870px;
+  margin-left: 0px;
+}
+.field-neweventform-description .form-control {
+  width: 860px;
+}
+.addEventFormWrapper_text {
+  height: auto;
+  justify-content: space-between;
+  padding-bottom: 30px;
+}
+.addEventFormWrapper_text .eventTitle {
+  padding-top: 50px;
+  height: auto;
+  padding-bottom: 20px;
+}
+.addEventFormWrapper_text .eventTime {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: auto;
+  padding-bottom: 10px;
+}
+.addEventFormWrapper_text .eventAuthor {
+  height: auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.addEventFormWrapper_text .eventDescription {
+  height: 250px;
+}
+.addEventFormWrapper_text .btn {
+  width: 200px;
+  margin-top: 30px;
+}
