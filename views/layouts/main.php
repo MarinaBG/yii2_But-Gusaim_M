@@ -52,7 +52,8 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            ),
+            ['label' => 'Calendar', 'url' => ['/calendar/index' , 'm' => date('n'), 'y' => date('Y')]],
         ],
     ]);
     NavBar::end();
