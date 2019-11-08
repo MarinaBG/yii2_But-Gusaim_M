@@ -29,6 +29,6 @@ class CalendarController extends Controller {
     public function actionEvent() {
         $model = new Calendar();
 
-        return $model->getEventInfo($_GET['eventId']);
+        return $model->getEventInfo($_GET['eventId'], $_GET['day'], $_GET['month'], $_GET['year'] );
     }
 }

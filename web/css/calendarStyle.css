@@ -71,16 +71,16 @@ h2 {
   background-color: #f5f5f5;
 }
 .calendarWrapper .dayEventsWrapper {
-  width: 30%;
+  width: 35%;
   margin-left: 20px;
 }
-.calendarWrapper .dayEventsWrapper .btn {
+.calendarWrapper .dayEventsWrapper .addEvent {
   background-color: #7aa86c;
   border-color: #7aa86c;
   margin-top: 20px;
 }
-.calendarWrapper .dayEventsWrapper .btn:hover,
-.calendarWrapper .dayEventsWrapper .btn:active {
+.calendarWrapper .dayEventsWrapper .addEvent:hover,
+.calendarWrapper .dayEventsWrapper .addEvent:active {
   border-color: #9ac48d;
   background-color: #9ac48d;
   outline: none;
@@ -92,6 +92,7 @@ h2 {
 }
 .calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper {
   display: flex;
+  justify-content: space-between;
   flex-direction: row;
   flex-wrap: nowrap;
   width: 100%;
@@ -105,21 +106,38 @@ h2 {
   background-color: #9ac48d;
 }
 .calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventTime {
-  width: 70px;
+  width: 60px;
   font-weight: bold;
 }
-.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventTitle {
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventDescription {
+  width: 110px;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventDescription .eventTitle {
   display: block;
   font-weight: bold;
   margin-bottom: 5px;
 }
-.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventAuthor {
+.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper .eventDescription .eventAuthor {
   font-size: 12px;
   margin-bottom: 0px;
 }
-.calendarWrapper .dayEventsWrapper .dayEvent .eventItemWrapper:hover {
-  cursor: pointer;
-  background-color: #f5f5f5;
+.calendarWrapper .dayEventsWrapper .dayEvent .noEvent {
+  margin-top: 20px;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .showEvent {
+  height: 25px;
+  font-size: 12px;
+  padding: 0px 12px;
+  line-height: 25px;
+  margin-top: 0px;
+  background-color: #7aa86c;
+  border-color: #7aa86c;
+}
+.calendarWrapper .dayEventsWrapper .dayEvent .showEvent:hover,
+.calendarWrapper .dayEventsWrapper .dayEvent .showEvent:active {
+  border-color: #9ac48d;
+  background-color: #9ac48d;
+  outline: none;
 }
 .popup,
 .addEventFormWrapper {
@@ -177,9 +195,104 @@ h2 {
 .addEventFormWrapper_cancel:hover {
   background-color: #9ac48d;
 }
+.modal-dialog {
+  width: 900px;
+  margin-top: 5%;
+}
+.modal-content {
+  width: 900px;
+  padding: 0px;
+}
+.modal-header {
+  height: 30px;
+  padding: 5px 5px;
+  background-color: #9ac48d;
+  border-bottom: 0px;
+}
+.modal-header .close {
+  border-radius: 50%;
+  background-color: white;
+  width: 20px;
+  height: 20px;
+}
+.modal-body {
+  padding: 0px;
+  width: 898px;
+  height: 570px;
+  border: 0px solid  #fefefe;
+  background-color: white;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  box-sizing: border-box;
+  font-size: 18px;
+  line-height: 28px;
+}
+.modal-body .eventTitle {
+  width: 898px;
+  height: 90px;
+  display: flex;
+  justify-content: flex-start;
+  background-color: #9ac48d;
+  align-items: flex-end;
+  padding-bottom: 20px;
+}
+.modal-body .eventTitle h3 {
+  margin: 0px 20px 0px 20px;
+  color: #fefefe;
+  font-weight: bold;
+  border: none;
+}
+.modal-body .modEventTime {
+  width: 898px;
+  height: 40px;
+  padding: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  background-color: #f5f5f5;
+  font-size: 16px;
+}
+.modal-body .modEventAuthor {
+  width: 898px;
+  padding: 5px 20px 5px 20px;
+  display: flex;
+  justify-content: flex-start;
+  font-size: 16px;
+  border-bottom: 1px solid #f5f5f5;
+}
+.modal-body .modEventAuthor p {
+  margin: 0px;
+}
+.modal-body .modEventAuthor .authorTitle {
+  margin-right: 15px;
+}
+.modal-body .modEventDescription {
+  margin-top: 40px;
+  width: 898px;
+  padding: 5px 20px 5px 20px;
+}
+.modal-body .modEventDescription .descriptionText {
+  height: 200px;
+  margin-top: 20px;
+}
+.modal-body .editEvent {
+  border-color: #fa5d5d;
+  background-color: #fa5d5d;
+  margin-top: 15px;
+}
+.modal-body .editEvent:hover,
+.modal-body .editEvent:active {
+  background-color: #fc7a7a;
+  border-color: #fc7a7a;
+  outline: none;
+}
 .popup_text,
 .addEventFormWrapper_text {
-  width: 900px;
+  width: 898px;
   height: 600px;
   border: 0px solid  #fefefe;
   background-color: white;
@@ -194,7 +307,7 @@ h2 {
 }
 .popup_text .eventTitle,
 .addEventFormWrapper_text .eventTitle {
-  width: 900px;
+  width: 898px;
   height: 100px;
   display: flex;
   justify-content: flex-start;
@@ -207,10 +320,11 @@ h2 {
   margin: 0px 20px 0px 20px;
   color: #fefefe;
   font-weight: bold;
+  border: none;
 }
 .popup_text .eventTime,
 .addEventFormWrapper_text .eventTime {
-  width: 900px;
+  width: 898px;
   height: 40px;
   padding: 0px 20px 0px 20px;
   display: flex;

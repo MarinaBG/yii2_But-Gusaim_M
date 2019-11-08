@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 use yii\base\Model;
+// use yii\base\Activities;
 
 class Calendar extends Model {
     public $months;
@@ -43,24 +44,27 @@ class Calendar extends Model {
         return $days;
     }
 
-    // временно
-    public function getDayEvents() {
-        $day = [];
-        array_push($day, [ 'id' => 1, 'start_time' => '10:00', 'end_time' => '12:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Собрание', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
-        array_push($day, [ 'id' => 2, 'start_time' => '12:00', 'end_time' => '13:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Бизнес-Ланч', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
-        array_push($day, [ 'id' => 3, 'start_time' => '15:00', 'end_time' => '17:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Презентация проекта', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
-        return $day;
+    
+    public function getDayEvents($getDayStr) {
+        // $day = [];
+        // array_push($day, [ 'id' => 1, 'start_time' => '10:00', 'end_time' => '12:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Собрание', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
+        // array_push($day, [ 'id' => 2, 'start_time' => '12:00', 'end_time' => '13:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Бизнес-Ланч', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
+        // array_push($day, [ 'id' => 3, 'start_time' => '15:00', 'end_time' => '17:00', 'day' => '25', 'month' => '9', 'monthName' => 'сентября', 'year' => '2019', 'title' => 'Презентация проекта', 'author' => 'Иванов', 'description' => 'Разнообразный и богатый опыт укрепление и развитие структуры требуют от нас анализа форм развития. Таким образом постоянное информационно-пропагандистское обеспечение нашей деятельности позволяет оценить значение форм развития. Задача организации, в особенности же рамки и место обучения кадров влечет за собой процесс внедрения и модернизации системы обучения кадров, соответствует насущным потребностям.']);
+        // return $day;
+        $dayEvents = Activities::find()->with('users')->asArray()->where(['like', 'date_start', $getDayStr])->all();
+        return $dayEvents;
     }
 
-    // временно
-    public function getEventInfo($id) {
-        $events = $this->getDayEvents();
-        
-        foreach($events as $event) {
-            if($event['id'] == $id) {
-                return json_encode($event);
-            }
-        }      
+    
+    public function getEventInfo($id, $day, $month, $year) {
+        $event = Activities::find()->with('users')->asArray()->where(['id_activity' => $id])->one();
+
+        $event['eventDate'] = $day.' '.$this->getMonthName($month)[1].' '.$year;
+        $event['date_start'] = substr((explode(" ", $event['date_start']))[1], 0, 5);
+        $event['date_end'] = substr((explode(" ", $event['date_end']))[1], 0, 5);       
+
+        return json_encode($event);
+        //return $event;
     }
 
     public function getMonth($month, $year) {
@@ -127,15 +131,38 @@ class Calendar extends Model {
         }
     }
 
+    public function getDateStr($month, $year, $day) {
+        $dayStr = $year.'-';
+
+        if ($month < 10) {
+            $dayStr.='0'.$month.'-';
+        }
+        else {
+            $dayStr.=$month.'-';
+        }
+
+        if ($day < 10) {
+            $dayStr.='0'.$day;
+        }
+        else {
+            $dayStr.=$day;
+        }
+
+        return $dayStr;
+    }
+
+
     public function getDay($month, $year, $day) {
         if ($month && $year && $day) {
-            $dayEvents = $this->getDayEvents();
+            $getDayStr = $this->getDateStr($month, $year, $day);
+            $dayEvents = $this->getDayEvents($getDayStr);
+            // return $dayEvents;
             if ($dayEvents) {
                 return [ $dayEvents, $this->getMonthName($month), $day, $this->getDayName($day, $month, $year), $month, $year ] ;
             }
-        }
-        else {
-            return 0;
+            else {
+                return [ 0, $this->getMonthName($month), $day, $this->getDayName($day, $month, $year), $month, $year ] ;
+            }
         }
     }
 

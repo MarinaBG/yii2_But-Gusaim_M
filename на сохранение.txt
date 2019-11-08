@@ -1,0 +1,40 @@
+<?= $form->field($eventForm, 'start_time')->widget(DateTimePicker::classname(), [ -->
+                    'options' => ['placeholder' => 'Начало'],
+                    'removeButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'hh:i',
+                    ]
+                ]);?>
+            <?= $form->field($eventForm, 'end_time')->widget(DateTimePicker::classname(), [
+                    'options' => ['placeholder' => 'Окончание'],
+                    'removeButton' => false,
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'hh:i',
+                    ]
+                ]);?>
+
+
+                <? if($dayEvents != 0) : ?>        
+        <div class="dayEventsWrapper" year="" month="" day="">
+            <div class="dayEvents">
+                <h3><?= $dayEvents[3] ?>, <?= $dayEvents[2] ?> <?= $dayEvents[1][1] ?></h3>
+                <div class="dayEvent">
+                    <? foreach( $dayEvents[0] as $event ): ?>
+                        <div class="eventItemWrapper" id="<?= $event['id'] ?>">
+                            <div class="eventLine"></div>
+                            <div class="eventTime"><?= $event['start_time'] ?></div>
+                            
+                            <div class="eventDescription">
+                                <p class="eventTitle"><?= $event['title'] ?></p>
+                                <p class="eventAuthor"><?= $event['author'] ?></p>
+                            </div>                            
+                        </div>
+                    <? endforeach; ?>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary addEvent" year="<?= $dayEvents[5] ?>" month="<?= $dayEvents[4] ?>" day="<?= $dayEvents[2] ?>">Добавить событие</button>
+        </div>
+    <? endif; ?>
+    </div> 

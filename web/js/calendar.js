@@ -17,7 +17,11 @@ class Calendar {
             },
         }).done(function(response) {
             let str = this.createEvent(response);
-            this.showMessage(str, 'popup'); 
+            //console.log(response);
+            // this.showMessage(str, 'popup'); 
+            $('.modal-body').empty();
+            $('.modal-body').append(str);
+
         });
     }
 
@@ -37,16 +41,33 @@ class Calendar {
 
     setEventsShowEvent() {
         let self = this;
-        if($('.eventItemWrapper')) {
-            $('.eventItemWrapper').on('click', function(event) {
+        if($('.showEvent')) {
+            $('.showEvent').on('click', function(event) {
                 let data = {};
     
                 data.eventId = parseInt($(event.currentTarget).attr('id'));
+                data.day = parseInt($(event.currentTarget).attr('day'));
+                data.month = parseInt($(event.currentTarget).attr('month'));
+                data.year = parseInt($(event.currentTarget).attr('year'));
                 self.requestGetEventInfo(data);
             });
-        }      
-        
+        }              
     }
+    // setEventsShowEvent() {
+    //     let self = this;
+    //     if($('.eventItemWrapper')) {
+    //         $('.eventItemWrapper').on('click', function(event) {
+    //             let data = {};
+    
+    //             data.eventId = parseInt($(event.currentTarget).attr('id'));
+    //             data.day = parseInt($(event.currentTarget).attr('day'));
+    //             data.month = parseInt($(event.currentTarget).attr('month'));
+    //             data.year = parseInt($(event.currentTarget).attr('year'));
+    //             self.requestGetEventInfo(data);
+    //         });
+    //     }      
+        
+    // }
 
     setEventsAddEvent() {
         let self = this;
@@ -59,25 +80,28 @@ class Calendar {
 
     
 
-    createEvent(arr) {
+    createEvent(obj) {
         let str = `<div class="eventTitle">
-            <h3>`+ arr['title'] +`</h3>
+            <h3>`+ obj['activity_name'] +`</h3>
         </div>
-        <div class="eventTime">
-            <p class="hour">` + arr['start_time'] + ` - ` +  arr['end_time'] + `</p>
-            <p class="date">` + arr['day'] + ` ` + arr['monthName'] + ` ` + arr['year'] + `</p>
+        <div class="modEventTime">
+            <p class="hour">` + obj['date_start'] + ` - ` +  obj['date_end'] + `</p>
+            <p class="date">` + obj['eventDate'] + `</p>
         </div>
-        <div class="eventAuthor">
+        <div class="modEventAuthor">
             <p class="authorTitle">Автор:</p>
-            <p class="authorName">` + arr['author'] + `</p>
+            <p class="authorName">` + obj['users']['user_name'] + `</p>
         </div>
-        <div class="eventDescription">
+        <div class="modEventDescription">
             <p class="descriptionTitle">Описание события:</p>
             <p class="descriptionText">`
-                 + arr['description'] +
+                 + obj['comment'] +
             `</p>
         </div>
-        <button type="button" class="btn btn-primary" id="` + arr['id'] + `">Редактировать событие</button>`;
+        <button type="button" class="btn btn-primary editEvent" id="` + obj['id_activity'] + `">Редактировать событие</button>`;
+
+        // let a = arr;
+        // alert(arr);
 
         return str;
 

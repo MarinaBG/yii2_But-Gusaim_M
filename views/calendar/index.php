@@ -2,6 +2,8 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 use kartik\datetime\DateTimePicker;
+use kartik\time\TimePicker;
+use yii\bootstrap\Modal;
 ?>
 
 <h2>Календарь событий</h2>
@@ -59,28 +61,50 @@ use kartik\datetime\DateTimePicker;
         </table>
     </div>
 
-    <? if($dayEvents != 0) : ?>        
+    <?//print_r($dayEvents)?>
+
+    <? if($dayEvents != 0) : ?>  
         <div class="dayEventsWrapper" year="" month="" day="">
             <div class="dayEvents">
                 <h3><?= $dayEvents[3] ?>, <?= $dayEvents[2] ?> <?= $dayEvents[1][1] ?></h3>
                 <div class="dayEvent">
-                    <? foreach( $dayEvents[0] as $event ): ?>
-                        <div class="eventItemWrapper" id="<?= $event['id'] ?>">
-                            <div class="eventLine"></div>
-                            <div class="eventTime"><?= $event['start_time'] ?></div>
-                            
-                            <div class="eventDescription">
-                                <p class="eventTitle"><?= $event['title'] ?></p>
-                                <p class="eventAuthor"><?= $event['author'] ?></p>
-                            </div>                            
-                        </div>
-                    <? endforeach; ?>
+                    <? if($dayEvents[0] != 0) : ?>     
+                        <? foreach( $dayEvents[0] as $event ): ?>
+                            <div class="eventItemWrapper" id="<?= $event['id_activity'] ?>" day ="<?= $dayEvents[2]?>" month= "<?=$dayEvents[4]?>" year= "<?=$dayEvents[5]?>">
+                                <div class="eventLine"></div>
+                                <div class="eventTime"><?= substr((explode(" ", $event['date_start']))[1], 0, 5) ?></div>
+                                
+                                <div class="eventDescription">
+                                    <p class="eventTitle"><?= $event['activity_name'] ?></p>
+                                    <p class="eventAuthor"><?= $event['users']['user_name'] ?></p>
+                                </div>   
+
+                                <? Modal::begin([
+                                    'toggleButton' => [
+                                        'label' => 'Подробнее',
+                                        'tag' => 'button',
+                                        'class' => 'btn btn-primary showEvent',
+                                        'id' => $event['id_activity'],
+                                        'day' => $dayEvents[2],
+                                        'month' => $dayEvents[4],
+                                        'year' => $dayEvents[5],
+                                    ],
+                                ]);         
+                                
+                                Modal::end();?>                        
+                            </div>
+                        <? endforeach; ?>
+                    <? else: ?>
+                        <p class ="noEvent">В данный день пока нет событий</p>                    
+                    <? endif; ?>
                 </div>
             </div>
             <button type="button" class="btn btn-primary addEvent" year="<?= $dayEvents[5] ?>" month="<?= $dayEvents[4] ?>" day="<?= $dayEvents[2] ?>">Добавить событие</button>
         </div>
     <? endif; ?>
 </div> 
+    
+
 
 <div class="popup" style="display: none"><div class="popup_bg"><div class="popup_wrapper">
     <div class="popup_text">
@@ -100,20 +124,25 @@ use kartik\datetime\DateTimePicker;
         </div>
 
         <div class="eventTime">
-            <?= $form->field($eventForm, 'start_time')->widget(DateTimePicker::classname(), [
-                    'options' => ['placeholder' => 'Начало'],
-                    'removeButton' => false,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                    ]
-                ]);?>
-            <?= $form->field($eventForm, 'end_time')->widget(DateTimePicker::classname(), [
-                    'options' => ['placeholder' => 'Окончание'],
-                    'removeButton' => false,
-                    'pluginOptions' => [
-                        'autoclose' => true,
-                    ]
-                ]);?>
+             <?= $form->field($eventForm, 'start_time')->widget(TimePicker::className(), [
+                'name' => 'start_time', 
+                'value'=> null,
+                'size' => 'xs',
+                'pluginOptions' => [
+                    'showSeconds' => false,
+                    'showMeridian' => false,
+                    'minuteStep' => 5,
+                ]
+            ]);?>
+            <?= $form->field($eventForm, 'end_time')->widget(TimePicker::className(), [
+                'name' => 'start_time', 
+                'value'=> null,
+                'pluginOptions' => [
+                    'showSeconds' => false,
+                    'showMeridian' => false,
+                    'minuteStep' => 5,
+                ]
+            ]);?>
         </div>
 
         <div class="eventAuthor">
